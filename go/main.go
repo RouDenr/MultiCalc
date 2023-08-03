@@ -2,9 +2,8 @@ package main
 
 import (
 	"github.com/webview/webview"
-	"net/http"
 	"io/ioutil"
-	"fmt"
+	"net/http"
 )
 
 func calculateHandler(w http.ResponseWriter, r *http.Request) {
@@ -19,12 +18,6 @@ func calculateHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/plain")
 	w.Write([]byte(result))
-}
-
-func calculateExpression(expression string) string {
-	// Вставьте здесь код для вычисления выражения из модели (C++ модель или обертки)
-	// В этом примере вернем просто результат выражения (как будто без вычисления)
-	return expression
 }
 
 func main() {

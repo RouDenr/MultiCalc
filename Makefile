@@ -1,3 +1,18 @@
+# OS dependent part
+ifeq ($(OS),Windows_NT)
+	detected_OS := Windows
+	rm_cmd := del /Q
+	md_cmd := mkdir
+	cp_cmd := xcopy /Q /Y
+	run_cmd :=
+else
+	detected_OS := $(shell uname -s)
+	rm_cmd := rm -rf
+	md_cmd := mkdir -p
+	cp_cmd := cp -r
+	run_cmd := ./
+endif
+
 CXX := g++
 GO := go
 CXXFLAGS := -std=c++17
@@ -22,12 +37,12 @@ build_viewmodel:
 	@echo "Golang ViewModel compiled."
 
 build_html:
-	cp $(HTML_DIR)/* $(BIN_DIR)
+	$(cp_cmd) $(HTML_DIR) $(BIN_DIR)
 	@echo "HTML files copied."
 
 run_server:
-	cd $(BIN_DIR) && ./app
+	cd $(BIN_DIR) && $(run_cmd)app
 
 clean:
-	rm -rf $(BUILD_DIR)/*
-	rm -rf $(BIN_DIR)/*
+	$(rm_cmd) $(BUILD_DIR)/*
+	$(rm_cmd) $(BIN_DIR)/*
